@@ -1,5 +1,5 @@
 ## Checkout my website:
-[Inventory](inventory-sage.vercel.app)
+[Inventory](https://inventory-sage.vercel.app/)
 
 
 
