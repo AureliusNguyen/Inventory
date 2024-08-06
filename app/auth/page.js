@@ -49,15 +49,17 @@ export default function SignInOrSignUp() {
           const user = userCredential.user;
           createUserDocument(user)
             .then(() => {
+              alert('Account created successfully. Please sign in with your new credentials.');
               auth.signOut().then(() => {
-                router.push('/auth'); // Redirect to sign in page after sign up
+                setIsSignUp(false);  // Switch to sign-in mode
+                document.getElementById('email').value = '';  // Clear email field
+                document.getElementById('password').value = '';  // Clear password field
               });
             });
         })
         .catch((error) => {
           if (error.code === 'auth/email-already-in-use') {
             alert('Email is already in use. Please try another one.');
-            // Reset email input field
             document.getElementById('email').value = '';
             document.getElementById('password').value = '';
           } else {
@@ -74,6 +76,7 @@ export default function SignInOrSignUp() {
         });
     }
   };
+  
   
   const handleGoogleSignIn = () => {
     const provider = new GoogleAuthProvider();
