@@ -36,13 +36,13 @@ const defaultTheme = createTheme();
 export default function SignInOrSignUp() {
   const router = useRouter();
   const [isSignUp, setIsSignUp] = React.useState(false);
-  
+
   const handleEmailPasswordSignIn = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get('email');
     const password = data.get('password');
-  
+
     if (isSignUp) {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
@@ -72,12 +72,22 @@ export default function SignInOrSignUp() {
           router.push('/');
         })
         .catch((error) => {
-          console.error('Error signing in', error);
+          if (error.code === 'auth/user-not-found') {
+            alert('No account found with this email. Please sign up first.');
+            document.getElementById('email').value = '';  // Clear email field
+            document.getElementById('password').value = '';  // Clear password field
+          } else if (error.code === 'auth/wrong-password') {
+            alert('Incorrect password. Please try again.');
+            document.getElementById('password').value = '';  // Clear password field
+          } else {
+            console.error('Error signing in', error);
+          }
         });
     }
   };
-  
-  
+
+
+
   const handleGoogleSignIn = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
