@@ -1,4 +1,4 @@
-## Checkout my website at:
+## Checkout my website:
 [Inventory](inventory-sage.vercel.app)
 
 
